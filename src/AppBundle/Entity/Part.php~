@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Part
 {
 
+    public function __construct($serialNumber, $name, $quantityInStock, $weight)
+    {
+        $this->serialNumber = $serialNumber;
+        $this->quantityInStock = $quantityInStock;
+        $this->name = $name;
+        $this->weight = $weight;
+    }
+
     /**
      * @var int
      *
@@ -25,9 +33,16 @@ class Part
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="serial_number", type="string", length=255)
      */
-    private $number;
+    private $serialNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
 
     /**
      * @var integer
@@ -36,4 +51,147 @@ class Part
      */
     private $quantityInStock;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="weight", type="integer")
+     */
+    private $weight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="picture", type="string", length=255)
+     */
+    private $picture;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set number
+     *
+     * @param string $number
+     *
+     * @return Part
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set quantityInStock
+     *
+     * @param integer $quantityInStock
+     *
+     * @return Part
+     */
+    public function setQuantityInStock($quantityInStock)
+    {
+        $this->quantityInStock = $quantityInStock;
+
+        return $this;
+    }
+
+    /**
+     * Get quantityInStock
+     *
+     * @return integer
+     */
+    public function getQuantityInStock()
+    {
+        return $this->quantityInStock;
+    }
+
+    /**
+     * Set serialNumber
+     *
+     * @param string $serialNumber
+     *
+     * @return Part
+     */
+    public function setSerialnumber($serialNumber)
+    {
+        $this->serialNumber = $serialNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get serialNumber
+     *
+     * @return string
+     */
+    public function getSerialNumber()
+    {
+        return $this->serialNumber;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Part
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     *
+     * @return Part
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
 }

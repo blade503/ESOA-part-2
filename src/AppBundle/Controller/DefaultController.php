@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Certification;
+use AppBundle\Entity\Part;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +40,23 @@ class DefaultController extends Controller
             array(
                 'certifications' => $certifications,
             )*/
+        );
+    }
+
+    /**
+     * @Route("/parts", name="parts_index")
+     */
+    public function partAction(Request $request)
+    {
+
+        $parts = $this->getDoctrine()
+            ->getRepository(Part::class)
+            ->findAll();
+
+        return $this->render('@App/Parts/index.html.twig',
+            array(
+                'parts' => $parts,
+            )
         );
 
 

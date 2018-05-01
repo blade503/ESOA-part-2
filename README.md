@@ -1,4 +1,14 @@
-esoa
-====
+ESOA - Usefull command
+======================
 
-A Symfony project created on April 1, 2018, 9:33 am.
+Mis à jour du schéme de bdd
+
+    php bin/console doctrine:schema:update --force
+    
+Chargement des fixtures
+
+    php bin/console doctrine:fixtures:load
+    
+Generation des getters et des setters
+
+    php bin/console doctrine:generate:entities AppBundle:EntityName
