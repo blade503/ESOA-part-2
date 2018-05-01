@@ -15,31 +15,23 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
         return $this->render('@App/Home/index.html.twig');
-        /*
-                $products = $this->getDoctrine()
-                    ->getRepository(Product::class)
-                    ->findAll();
-        */
-
-
     }
 
     /**
-     * @Route("/certification", name="certification")
+     * @Route("/certifications", name="certifications_index")
      */
     public function certificationAction(Request $request)
     {
 
-        /*$certifications = $this->getDoctrine()
+        $certifications = $this->getDoctrine()
             ->getRepository(Certification::class)
             ->findAll();
-*/
-        return $this->render('@App/Certifiation/index.html.twig'/*,
+
+        return $this->render('@App/Certifiation/index.html.twig',
             array(
                 'certifications' => $certifications,
-            )*/
+            )
         );
     }
 

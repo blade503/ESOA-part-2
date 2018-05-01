@@ -12,6 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Certification
 {
+
+    /**
+     * Certification constructor.
+     * @param $name
+     * @param $code
+     * @param $description
+     */
+    public function __construct($name, $code, $description)
+    {
+        $this->name = $name;
+        $this->code = $code;
+        $this->description = $description;
+    }
+
     /**
      * @var int
      *
