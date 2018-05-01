@@ -1,0 +1,37 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PartOrder
+ *
+ * @ORM\Table(name="partOrder")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PartOrderRepository")
+ */
+class PartOrder
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    private $user;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="part_id", type="integer")
+     */
+    private $part;
+}
