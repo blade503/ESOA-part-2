@@ -11,4 +11,13 @@ namespace AppBundle\Repository;
 class GarageRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    public function findByName($name)
+    {
+        return $this->createQueryBuilder('garage')
+            ->andWhere('garage.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->execute();
+    }
+
 }

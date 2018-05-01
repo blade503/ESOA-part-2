@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,7 +39,94 @@ class Garage
     /**
      * @var string
      *
-     * @ORM\Column(name="mechanics", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mechanic", mappedBy="garage")
      */
     private $mechanics;
+
+    public function __construct()
+    {
+        $this->mechanics = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Garage
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return Garage
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set mechanics
+     *
+     * @param string $mechanics
+     *
+     * @return Garage
+     */
+    public function setMechanics($mechanics)
+    {
+        $this->mechanics = $mechanics;
+
+        return $this;
+    }
+
+    /**
+     * Get mechanics
+     *
+     * @return string
+     */
+    public function getMechanics()
+    {
+        return $this->mechanics;
+    }
 }

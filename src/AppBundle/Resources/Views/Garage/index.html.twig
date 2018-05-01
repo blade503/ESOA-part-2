@@ -8,43 +8,34 @@
         <li class="breadcrumb-item">
             <a href="{{ path('homepage') }}">Accueil</a>
         </li>
-        <li class="breadcrumb-item active">Parts</li>
+        <li class="breadcrumb-item active">Garage</li>
     </ol>
 {% endblock %}
 
 {% block body %}
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fa fa-table"></i> Parts</div>
+            <i class="fa fa-table"></i> {{ garage.name }}</div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Serial Number</th>
                         <th>Name</th>
-                        <th>Weight</th>
-                        <th>Image</th>
-                        <th>Quantity In Stock</th>
+                        <th>Certification</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>Serial Number</th>
                         <th>Name</th>
-                        <th>Weight</th>
-                        <th>Image</th>
-                        <th>Quantity In Stock</th>
+                        <th>Certification</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% for part in parts %}
+                    {% for mechanic in garage.mechanics %}
                         <tr>
-                            <td>{{ part.serialNumber }}</td>
-                            <td>{{ part.name }}</td>
-                            <td>{{ part.weight }}</td>
-                            <td><img src="{{ asset('images/parts/'~ part.picture ) }}" height="90" alt=""/></td>
-                            <td>{{ part.quantityInStock }}</td>
+                            <td>{{ mechanic.name }}</td>
+                            <td>{% for certif in mechanic.certifications %}{{ certif.name }}{% endfor %}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

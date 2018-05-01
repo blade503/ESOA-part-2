@@ -38,4 +38,9 @@ class ProductFixtures implements ORMFixtureInterface
 
         $manager->flush();
     }
+
+    public function getOrder()
+    {
+        return 1;
+    }
 }

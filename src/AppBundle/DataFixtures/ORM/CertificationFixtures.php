@@ -28,4 +28,9 @@ class CertificationFixtures implements ORMFixtureInterface
 
         $manager->flush();
     }
+
+    public function getOrder()
+    {
+        return 2;
+    }
 }

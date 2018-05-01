@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,9 +39,16 @@ class Garage
     /**
      * @var string
      *
-     * @ORM\Column(name="mechanics", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mechanic", mappedBy="garage")
      */
     private $mechanics;
+
+    public function __construct($name, $address)
+    {
+        $this->address = $address;
+        $this->name = $name;
+        $this->mechanics = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -122,5 +130,31 @@ class Garage
     public function getMechanics()
     {
         return $this->mechanics;
+    }
+
+    /**
+     * Add mechanic.
+     *
+     * @param \AppBundle\Entity\Mechanic $mechanic
+     *
+     * @return Garage
+     */
+    public function addMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    {
+        $this->mechanics[] = $mechanic;
+
+        return $this;
+    }
+
+    /**
+     * Remove mechanic.
+     *
+     * @param \AppBundle\Entity\Mechanic $mechanic
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    {
+        return $this->mechanics->removeElement($mechanic);
     }
 }

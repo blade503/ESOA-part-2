@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Mechanic
 {
+    public function __construct($name)
+    {
+        $this->name = $name;
+        $this->certifications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -29,16 +35,15 @@ class Mechanic
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="garage", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Garage", inversedBy="mechanics")
+     * @ORM\JoinColumn(name="garage_id", referencedColumnName="id")
      */
     private $garage;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="certifications", type="string", length=255)
+     * Many Mechnanic have many certifications.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Certification", inversedBy="mechanics")
+     * @ORM\JoinTable(name="mechanics_certifications")
      */
     private $certifications;
 
@@ -77,44 +82,6 @@ class Mechanic
     }
 
     /**
-     * Set garage
-     *
-     * @param string $garage
-     *
-     * @return Mechanic
-     */
-    public function setGarage($garage)
-    {
-        $this->garage = $garage;
-
-        return $this;
-    }
-
-    /**
-     * Get garage
-     *
-     * @return string
-     */
-    public function getGarage()
-    {
-        return $this->garage;
-    }
-
-    /**
-     * Set certifications
-     *
-     * @param string $certifications
-     *
-     * @return Mechanic
-     */
-    public function setCertifications($certifications)
-    {
-        $this->certifications = $certifications;
-
-        return $this;
-    }
-
-    /**
      * Get certifications
      *
      * @return string
@@ -122,5 +89,55 @@ class Mechanic
     public function getCertifications()
     {
         return $this->certifications;
+    }
+
+    /**
+     * Add certification.
+     *
+     * @param \AppBundle\Entity\Certification $certification
+     *
+     * @return Mechanic
+     */
+    public function addCertification(\AppBundle\Entity\Certification $certification)
+    {
+        $this->certifications[] = $certification;
+
+        return $this;
+    }
+
+    /**
+     * Remove certification.
+     *
+     * @param \AppBundle\Entity\Certification $certification
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCertification(\AppBundle\Entity\Certification $certification)
+    {
+        return $this->certifications->removeElement($certification);
+    }
+
+    /**
+     * Set garage.
+     *
+     * @param \AppBundle\Entity\Garage|null $garage
+     *
+     * @return Mechanic
+     */
+    public function setGarage(\AppBundle\Entity\Garage $garage = null)
+    {
+        $this->garage = $garage;
+
+        return $this;
+    }
+
+    /**
+     * Get garage.
+     *
+     * @return \AppBundle\Entity\Garage|null
+     */
+    public function getGarage()
+    {
+        return $this->garage;
     }
 }

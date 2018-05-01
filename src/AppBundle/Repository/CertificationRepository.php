@@ -11,4 +11,13 @@ namespace AppBundle\Repository;
 class CertificationRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    public function findByCode($code)
+    {
+        return $this->createQueryBuilder('certification')
+            ->andWhere('certification.code = :code')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->execute();
+    }
+
 }
