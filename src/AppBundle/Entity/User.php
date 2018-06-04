@@ -12,6 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    public function __construct($name, $email, $roles = array('ROLE_USER'))
+    {
+        $this->name = $name;
+        $this->roles = $roles;
+        $this->email = $email;
+        $this->password = 'abcd';
+        $this->certifications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -20,6 +29,26 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Garage", inversedBy="users")
+     * @ORM\JoinColumn(name="garage_id", referencedColumnName="id")
+     */
+    private $garage;
+
+    /**
+     * Many User have many certifications.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Certification", inversedBy="users")
+     * @ORM\JoinTable(name="users_certifications")
+     */
+    private $certifications;
 
     /**
      * @var string
@@ -36,6 +65,18 @@ class User
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PartOrder", mappedBy="user")
+     */
+    private $partOrders;
+
+    /**
+     * @var array
+     *
+     * Roles can be 'ROLE_USER', 'ROLE_MECHANIC', 'ROLE_GARAGE', 'ROLE_BE'
+     */
+    private $roles;
+
+    /**
      * Get id
      *
      * @return integer
@@ -46,7 +87,91 @@ class User
     }
 
     /**
-     * Set email
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Mechanic
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get certifications
+     *
+     * @return string
+     */
+    public function getCertifications()
+    {
+        return $this->certifications;
+    }
+
+    /**
+     * Add certification.
+     *
+     * @param \AppBundle\Entity\Certification $certification
+     *
+     * @return Mechanic
+     */
+    public function addCertification(\AppBundle\Entity\Certification $certification)
+    {
+        $this->certifications[] = $certification;
+
+        return $this;
+    }
+
+    /**
+     * Remove certification.
+     *
+     * @param \AppBundle\Entity\Certification $certification
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCertification(\AppBundle\Entity\Certification $certification)
+    {
+        return $this->certifications->removeElement($certification);
+    }
+
+    /**
+     * Set garage.
+     *
+     * @param \AppBundle\Entity\Garage|null $garage
+     *
+     * @return Mechanic
+     */
+    public function setGarage(\AppBundle\Entity\Garage $garage = null)
+    {
+        $this->garage = $garage;
+
+        return $this;
+    }
+
+    /**
+     * Get garage.
+     *
+     * @return \AppBundle\Entity\Garage|null
+     */
+    public function getGarage()
+    {
+        return $this->garage;
+    }
+
+    /**
+     * Set email.
      *
      * @param string $email
      *
@@ -60,7 +185,7 @@ class User
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -70,7 +195,7 @@ class User
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
      *
@@ -84,12 +209,48 @@ class User
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Add partOrder.
+     *
+     * @param \AppBundle\Entity\PartOrder $partOrder
+     *
+     * @return User
+     */
+    public function addPartOrder(\AppBundle\Entity\PartOrder $partOrder)
+    {
+        $this->partOrders[] = $partOrder;
+
+        return $this;
+    }
+
+    /**
+     * Remove partOrder.
+     *
+     * @param \AppBundle\Entity\PartOrder $partOrder
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePartOrder(\AppBundle\Entity\PartOrder $partOrder)
+    {
+        return $this->partOrders->removeElement($partOrder);
+    }
+
+    /**
+     * Get partOrders.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPartOrders()
+    {
+        return $this->partOrders;
     }
 }

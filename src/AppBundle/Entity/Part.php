@@ -48,7 +48,7 @@ class Part
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantityInStock", type="integer")
+     * @ORM\Column(name="quantity_in_stock", type="integer")
      */
     private $quantityInStock;
 

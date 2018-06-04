@@ -39,7 +39,7 @@ class Garage
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mechanic", mappedBy="garage")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="garage")
      */
     private $mechanics;
 

@@ -64,6 +64,8 @@ class DefaultController extends Controller
             ->getRepository(Part::class)
             ->findAll();
 
+
+
         return $this->render('@App/Parts/index.html.twig',
             array(
                 'parts' => $parts,

@@ -59,9 +59,9 @@ class Certification
 
     /**
      * Many Certifications have Many Certifications.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Mechanic", mappedBy="certifications")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="certifications")
      */
-    private $mechanics;
+    private $user;
 
     /**
      * Get id
@@ -148,13 +148,13 @@ class Certification
     /**
      * Add mechanic.
      *
-     * @param \AppBundle\Entity\Mechanic $mechanic
+     * @param \AppBundle\Entity\User $user
      *
      * @return Certification
      */
-    public function addMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    public function addMechanic(\AppBundle\Entity\User $user)
     {
-        $this->mechanics[] = $mechanic;
+        $this->user[] = $user;
 
         return $this;
     }
@@ -162,13 +162,13 @@ class Certification
     /**
      * Remove mechanic.
      *
-     * @param \AppBundle\Entity\Mechanic $mechanic
+     * @param \AppBundle\Entity\User $user
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    public function removeMechanic(\AppBundle\Entity\User $user)
     {
-        return $this->mechanics->removeElement($mechanic);
+        return $this->mechanics->removeElement($user);
     }
 
     /**
@@ -176,8 +176,8 @@ class Certification
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMechanics()
+    public function getUser()
     {
-        return $this->mechanics;
+        return $this->user;
     }
 }

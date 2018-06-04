@@ -13,12 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Part
 {
 
-    public function __construct($serialNumber, $name, $quantityInStock, $weight)
+    public function __construct($serialNumber, $name, $quantityInStock, $weight, $picture)
     {
         $this->serialNumber = $serialNumber;
         $this->quantityInStock = $quantityInStock;
         $this->name = $name;
         $this->weight = $weight;
+        $this->picture = $picture;
     }
 
     /**
@@ -47,7 +48,7 @@ class Part
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantityInStock", type="integer")
+     * @ORM\Column(name="quantity_in_stock", type="integer")
      */
     private $quantityInStock;
 
@@ -193,5 +194,29 @@ class Part
     public function getWeight()
     {
         return $this->weight;
+    }
+
+    /**
+     * Set picture.
+     *
+     * @param string $picture
+     *
+     * @return Part
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture.
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }
