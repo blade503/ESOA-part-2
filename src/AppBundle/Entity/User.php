@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,15 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
-    public function __construct($name, $email, $roles = array('ROLE_USER'))
+    public function __construct($name, $email, $roles = array())
     {
         $this->name = $name;
-        $this->roles = $roles;
+        $this->roles = array_merge(array('ROLE_USER'), $roles);
         $this->email = $email;
         $this->password = 'abcd';
         $this->certifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->salt = sha1($name.'toto'.$email);
     }
 
     /**
@@ -70,11 +72,20 @@ class User
     private $partOrders;
 
     /**
+     * Roles can be 'ROLE_USER', 'ROLE_MECHANIC', 'ROLE_GARAGE', 'ROLE_BE'
+     *
      * @var array
      *
-     * Roles can be 'ROLE_USER', 'ROLE_MECHANIC', 'ROLE_GARAGE', 'ROLE_BE'
+     * @ORM\Column(type="json_array")
      */
     private $roles;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
 
     /**
      * Get id
@@ -252,5 +263,65 @@ class User
     public function getPartOrders()
     {
         return $this->partOrders;
+    }
+
+    /**
+     * Set roles.
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

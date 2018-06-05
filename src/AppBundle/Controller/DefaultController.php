@@ -27,29 +27,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/certifications", name="certifications_index")
-     */
-    public function certificationAction(Request $request)
-    {
-
-        //Récupération des garages pour le menu
-        $garages = $this->getDoctrine()
-            ->getRepository(Garage::class)
-            ->findAll();
-
-        $certifications = $this->getDoctrine()
-            ->getRepository(Certification::class)
-            ->findAll();
-
-        return $this->render('@App/Certifiation/index.html.twig',
-            array(
-                'certifications' => $certifications,
-                'garagesNav' => $garages,
-            )
-        );
-    }
-
-    /**
      * @Route("/parts", name="parts_index")
      */
     public function partAction(Request $request)
@@ -69,6 +46,29 @@ class DefaultController extends Controller
         return $this->render('@App/Parts/index.html.twig',
             array(
                 'parts' => $parts,
+                'garagesNav' => $garages,
+            )
+        );
+    }
+
+    /**
+     * @Route("/certifications", name="certifications_index")
+     */
+    public function certificationAction(Request $request)
+    {
+
+        //Récupération des garages pour le menu
+        $garages = $this->getDoctrine()
+            ->getRepository(Garage::class)
+            ->findAll();
+
+        $certifications = $this->getDoctrine()
+            ->getRepository(Certification::class)
+            ->findAll();
+
+        return $this->render('@App/Certifiation/index.html.twig',
+            array(
+                'certifications' => $certifications,
                 'garagesNav' => $garages,
             )
         );

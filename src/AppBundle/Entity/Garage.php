@@ -135,11 +135,11 @@ class Garage
     /**
      * Add mechanic.
      *
-     * @param \AppBundle\Entity\Mechanic $mechanic
+     * @param \AppBundle\Entity\User $mechanic
      *
      * @return Garage
      */
-    public function addMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    public function addMechanic(\AppBundle\Entity\User $mechanic)
     {
         $this->mechanics[] = $mechanic;
 
@@ -149,11 +149,11 @@ class Garage
     /**
      * Remove mechanic.
      *
-     * @param \AppBundle\Entity\Mechanic $mechanic
+     * @param \AppBundle\Entity\User $mechanic
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeMechanic(\AppBundle\Entity\Mechanic $mechanic)
+    public function removeMechanic(\AppBundle\Entity\User $mechanic)
     {
         return $this->mechanics->removeElement($mechanic);
     }
