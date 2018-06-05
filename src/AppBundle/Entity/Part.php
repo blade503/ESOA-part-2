@@ -67,6 +67,11 @@ class Part
     private $picture;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PartOrder", mappedBy="part")
+     */
+    private $orders;
+
+    /**
      * Get id
      *
      * @return integer
@@ -218,5 +223,41 @@ class Part
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * Add order.
+     *
+     * @param \AppBundle\Entity\PartOrder $order
+     *
+     * @return Part
+     */
+    public function addOrder(\AppBundle\Entity\PartOrder $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order.
+     *
+     * @param \AppBundle\Entity\PartOrder $order
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeOrder(\AppBundle\Entity\PartOrder $order)
+    {
+        return $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

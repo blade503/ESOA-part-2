@@ -14,8 +14,11 @@
 {% block body %}
     <div class="row">
         <div class="col-12">
-            <h1>Je suis vide</h1>
-            <p>Mais le template est en place et je peux facilement avoir des pages qui fonctionnent</p>
+            {% if app.user %}
+                <h1>Bienvenue {{ app.user.name }}</h1>
+            {% else %}
+                <h1>Bienvenue Anonymous User</h1>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

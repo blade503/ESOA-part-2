@@ -28,17 +28,28 @@ class PartOrder
     private $user;
 
     /**
-     * Many orders have Many parts
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Part", mappedBy="parts_order")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Part", inversedBy="Orders")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $parts;
+    private $part;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="part_id", type="integer")
+     * @ORM\Column(name="quantity", type="integer")
      */
-    private $part;
+    private $quantity;
+
+    /**
+     * Constructor
+     */
+    public function __construct($user, $part, $quantity)
+    {
+        $this->user = $user;
+        $this->parts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addPart($part);
+        $this->quantity = $quantity;
+    }
 
     /**
      * Get id
@@ -75,37 +86,6 @@ class PartOrder
     }
 
     /**
-     * Set part
-     *
-     * @param integer $part
-     *
-     * @return PartOrder
-     */
-    public function setPart($part)
-    {
-        $this->part = $part;
-
-        return $this;
-    }
-
-    /**
-     * Get part
-     *
-     * @return integer
-     */
-    public function getPart()
-    {
-        return $this->part;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->parts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add part.
      *
      * @param \AppBundle\Entity\Part $part
@@ -139,5 +119,53 @@ class PartOrder
     public function getParts()
     {
         return $this->parts;
+    }
+
+    /**
+     * Set quantity.
+     *
+     * @param int $quantity
+     *
+     * @return PartOrder
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity.
+     *
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set part.
+     *
+     * @param \AppBundle\Entity\Part $part
+     *
+     * @return PartOrder
+     */
+    public function setPart(\AppBundle\Entity\Part $part)
+    {
+        $this->part = $part;
+
+        return $this;
+    }
+
+    /**
+     * Get part.
+     *
+     * @return \AppBundle\Entity\Part
+     */
+    public function getPart()
+    {
+        return $this->part;
     }
 }

@@ -28,17 +28,27 @@ class PartOrder
     private $user;
 
     /**
-     * Many orders have Many parts
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Part", mappedBy="parts_order")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Part", inversedBy="Orders")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $parts;
+    private $part;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="part_id", type="integer")
+     * @ORM\Column(name="quantity", type="integer")
      */
-    private $part;
+    private $quantity;
+
+    /**
+     * Constructor
+     */
+    public function __construct($user, $part, $quantity)
+    {
+        $this->user = $user;
+        $this->part = $part;
+        $this->quantity = $quantity;
+    }
 
     /**
      * Get id
@@ -75,13 +85,37 @@ class PartOrder
     }
 
     /**
-     * Set part
+     * Set quantity.
      *
-     * @param integer $part
+     * @param int $quantity
      *
      * @return PartOrder
      */
-    public function setPart($part)
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity.
+     *
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set part.
+     *
+     * @param \AppBundle\Entity\Part $part
+     *
+     * @return PartOrder
+     */
+    public function setPart(\AppBundle\Entity\Part $part)
     {
         $this->part = $part;
 
@@ -89,55 +123,12 @@ class PartOrder
     }
 
     /**
-     * Get part
+     * Get part.
      *
-     * @return integer
+     * @return \AppBundle\Entity\Part
      */
     public function getPart()
     {
         return $this->part;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->parts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add part.
-     *
-     * @param \AppBundle\Entity\Part $part
-     *
-     * @return PartOrder
-     */
-    public function addPart(\AppBundle\Entity\Part $part)
-    {
-        $this->parts[] = $part;
-
-        return $this;
-    }
-
-    /**
-     * Remove part.
-     *
-     * @param \AppBundle\Entity\Part $part
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePart(\AppBundle\Entity\Part $part)
-    {
-        return $this->parts->removeElement($part);
-    }
-
-    /**
-     * Get parts.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParts()
-    {
-        return $this->parts;
     }
 }

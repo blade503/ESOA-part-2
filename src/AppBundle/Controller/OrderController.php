@@ -23,14 +23,14 @@ class OrderController extends Controller
             ->getRepository(Garage::class)
             ->findAll();
 
-        /*
-         $orders = $this->getDoctrine()
-            ->getRepository(PartOrder::class)
-            ->findBy(array('user' => $this->get('')));
-        */
-        return $this->render('@App/Parts/index.html.twig',
+
+        $orders = $this->getDoctrine()
+           ->getRepository(PartOrder::class)
+           ->findBy(array('user' => $this->get('security.token_storage')->getToken()->getUser()));
+
+        return $this->render('@App/Orders/index.html.twig',
             array(
-                //'orders' => $orders,
+                'orders' => $orders,
                 'garagesNav' => $garages,
             )
         );

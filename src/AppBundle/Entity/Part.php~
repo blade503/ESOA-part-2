@@ -67,6 +67,11 @@ class Part
     private $picture;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PartOrder", mappedBy="part")
+     */
+    private $orders;
+
+    /**
      * Get id
      *
      * @return integer
