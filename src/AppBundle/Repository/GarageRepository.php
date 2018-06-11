@@ -19,5 +19,4 @@ class GarageRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->execute();
     }
-
 }

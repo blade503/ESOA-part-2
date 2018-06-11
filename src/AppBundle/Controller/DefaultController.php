@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Certification;
 use AppBundle\Entity\Garage;
 use AppBundle\Entity\Part;
+use AppBundle\Entity\PartOrder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,8 +89,23 @@ class DefaultController extends Controller
             ->getRepository(Garage::class)
             ->findOneBy(array('id' => $id));
 
+        $orders = [];
+
+        foreach ($garage->getUsers() as $user) {
+            $userOrders = $this->getDoctrine()
+                ->getRepository(PartOrder::class)
+                ->findBy(array('user' => $user));
+
+            foreach ($userOrders as $order) {
+                if (!array_key_exists($order->getId(), $orders) && $order->getStatus() < 30) {
+                    $orders[$order->getId()] = $order;
+                }
+            }
+        }
+
         return $this->render('@App/Garage/index.html.twig',
             array(
+                'orderCount' => count($orders),
                 'garage' => $garage,
                 'garagesNav' => $garages,
             )
