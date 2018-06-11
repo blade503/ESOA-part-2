@@ -58,15 +58,16 @@ class ApplicationFixtures implements ORMFixtureInterface
         );
 
         $this->user = array(
-            ["Michael","A", "Oh My Garage", "michael@gmail.com", array('ROLE_MECHANIC')],
-            ["Anthony", "A", "Oh My Garage", "anthony@gmail.com", array('ROLE_MECHANIC')],
-            ["Damien", "C", "Oh My Garage", "damien@gmail.com", array('ROLE_MECHANIC')],
-            ["Nicolas", "B", "What's In My Garage", "nicolas@gmail.com", array('ROLE_MECHANIC')],
-            ["Simon", "C", "What's In My Garage", "simon@gmail.com", array('ROLE_MECHANIC')],
-            ["Eva", "A", "What's In My Garage", "eva@gmail.com", array('ROLE_MECHANIC')],
-            ["Isabelle", "B", "THE Local Garage", "isabelle@gmail.com", array('ROLE_MECHANIC')],
-            ["Antoine", "C", "THE Local Garage", "antoine@gmail.com", array('ROLE_MECHANIC')],
-            ["Etienne", "B", "THE Local Garage", "etienne@gmail.com", array('ROLE_MECHANIC')],
+            ["Michael","A", "Oh My Garage", "michael@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Anthony", "A", "Oh My Garage", "anthony@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Damien", "C", "Oh My Garage", "damien@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Nicolas", "B", "What's In My Garage", "nicolas@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Simon", "C", "What's In My Garage", "simon@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Eva", "A", "What's In My Garage", "eva@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Isabelle", "B", "THE Local Garage", "isabelle@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Antoine", "C", "THE Local Garage", "antoine@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Etienne", "B", "THE Local Garage", "etienne@gmail.com", array('ROLE_MECHANIC'), 'mecha'],
+            ["Alexandre", "", "", "admin@gmail.com", array('ROLE_ADMIN'), 'admin'],
         );
 
         $this->order = array(
@@ -106,23 +107,30 @@ class ApplicationFixtures implements ORMFixtureInterface
         $manager->flush();
 
         foreach ($this->user as $m) {
-            $mechanic = new User($m[0], $m[3], $m[4]);
+            if ($m[5] == 'admin'){
+                $admin = new User($m[0], $m[3], $m[4]);
+                $admin->setPassword($this->encoder->encodePassword($admin, 'goodpassword'));
+                $admin->setGarage(null);
+                $manager->persist($admin);
+            } else {
+                $mechanic = new User($m[0], $m[3], $m[4]);
 
-            $mechanic->setPassword($this->encoder->encodePassword($mechanic, 'goodpassword'));
+                $mechanic->setPassword($this->encoder->encodePassword($mechanic, 'goodpassword'));
 
-            $certification = $manager
-                ->getRepository(Certification::class)
-                ->findByCode($m[1]);
+                $certification = $manager
+                    ->getRepository(Certification::class)
+                    ->findByCode($m[1]);
 
-            $mechanic->addCertification($certification[0]);
+                $mechanic->addCertification($certification[0]);
 
-            $garage = $manager
-                ->getRepository(Garage::class)
-                ->findByName($m[2]);
+                $garage = $manager
+                    ->getRepository(Garage::class)
+                    ->findByName($m[2]);
 
-            $mechanic->setGarage($garage[0]);
+                $mechanic->setGarage($garage[0]);
 
-            $manager->persist($mechanic);
+                $manager->persist($mechanic);
+            }
         }
 
         $manager->flush();

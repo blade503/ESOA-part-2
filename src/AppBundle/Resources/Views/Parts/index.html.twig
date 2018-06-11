@@ -25,6 +25,7 @@
                         <th>Weight</th>
                         <th>Image</th>
                         <th>Quantity In Stock</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -34,6 +35,7 @@
                         <th>Weight</th>
                         <th>Image</th>
                         <th>Quantity In Stock</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -44,6 +46,7 @@
                             <td>{{ part.weight }}</td>
                             <td><img src="{{ asset('images/parts/'~ part.picture ) }}" height="90" alt=""/></td>
                             <td>{{ part.quantityInStock }}</td>
+                            <td><a class="btn btn-primary" href="{{ path('new_order', { 'partId': part.id } ) }}">Create Order</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

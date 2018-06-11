@@ -5,11 +5,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            {% if not is_granted('ROLE_ADMIN') %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    <a class="nav-link" href="{{ path('order_by_garage') }}">
+                        <i class="fa fa-fw fa-clipboard"></i>
+                        <span class="nav-link-text">Orders</span>
+                    </a>
+                </li>
+            {% endif %}
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="{{ path('parts_index') }}">
-                    <i class="fa fa-fw fa-cogs"></i>
-                    <span class="nav-link-text">Parts</span>
-                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="nav-link" href="{{ path('order_for_admin') }}">
+                        <i class="fa fa-fw fa-cogs"></i>
+                        <span class="nav-link-text">Parts</span>
+                    </a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('parts_index') }}">
+                        <i class="fa fa-fw fa-cogs"></i>
+                        <span class="nav-link-text">Parts</span>
+                    </a>
+                {% endif %}
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
                 <a class="nav-link" href="{{ path('certifications_index') }}">
@@ -17,19 +32,29 @@
                     <span class="nav-link-text">Certifications</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-sitemap"></i>
-                    <span class="nav-link-text">Garages </span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseMulti">
-                    {% for garage in garagesNav %}
-                        <li>
-                            <a href="{{ path('garage_index', { 'id': garage.id }) }}">{{ garage.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </li>
+            {% if app.user and is_granted('ROLE_ADMIN') %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-sitemap"></i>
+                        <span class="nav-link-text">Garages </span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseMulti">
+                        {% for garage in garagesNav %}
+                            <li>
+                                <a href="{{ path('garage_index', { 'id': garage.id }) }}">{{ garage.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% elseif app.user and is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('garage_index', {'id' : app.user.garage.id }) }}">
+                        <i class="fa fa-fw fa-clipboard"></i>
+                        <span class="nav-link-text">{{ app.user.garage.name }}</span>
+                    </a>
+                </li>
+            {% endif %}
+
             <!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-sitemap"></i>

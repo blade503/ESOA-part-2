@@ -39,13 +39,15 @@ class Garage
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mechanic", mappedBy="garage")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="garage")
      */
-    private $mechanics;
+    private $user;
 
-    public function __construct()
+    public function __construct($name, $address)
     {
-        $this->mechanics = new ArrayCollection();
+        $this->address = $address;
+        $this->name = $name;
+        $this->user = new ArrayCollection();
     }
 
     /**
@@ -104,29 +106,5 @@ class Garage
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     * Set mechanics
-     *
-     * @param string $mechanics
-     *
-     * @return Garage
-     */
-    public function setMechanics($mechanics)
-    {
-        $this->mechanics = $mechanics;
-
-        return $this;
-    }
-
-    /**
-     * Get mechanics
-     *
-     * @return string
-     */
-    public function getMechanics()
-    {
-        return $this->mechanics;
     }
 }

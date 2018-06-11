@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PartOrder
 {
+    const NEW_ORDER = 0;
+    const ACCEPTED_ORDER = 10;
+    const DELETED_ORDER = 20;
+    const IN_TRANSIT_ORDER = 30;
+    const DELIVERED_ORDER = 40;
+
     /**
      * @var int
      *
@@ -41,14 +47,21 @@ class PartOrder
     private $quantity;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
      * Constructor
      */
     public function __construct($user, $part, $quantity)
     {
         $this->user = $user;
-        $this->parts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->addPart($part);
+        $this->part = $part;
         $this->quantity = $quantity;
+        $this->status = PartOrder::NEW_ORDER;
     }
 
     /**
@@ -83,42 +96,6 @@ class PartOrder
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Add part.
-     *
-     * @param \AppBundle\Entity\Part $part
-     *
-     * @return PartOrder
-     */
-    public function addPart(\AppBundle\Entity\Part $part)
-    {
-        $this->parts[] = $part;
-
-        return $this;
-    }
-
-    /**
-     * Remove part.
-     *
-     * @param \AppBundle\Entity\Part $part
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePart(\AppBundle\Entity\Part $part)
-    {
-        return $this->parts->removeElement($part);
-    }
-
-    /**
-     * Get parts.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParts()
-    {
-        return $this->parts;
     }
 
     /**

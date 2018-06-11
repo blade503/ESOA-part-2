@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PartOrder
 {
+    const NEW_ORDER = 0;
+    const ACCEPTED_ORDER = 10;
+    const IN_TRANSIT_ORDER = 20;
+    const DELIVERED_ORDER = 30;
+    const DELETED_ORDER = 40;
+
     /**
      * @var int
      *
@@ -41,6 +47,13 @@ class PartOrder
     private $quantity;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    /**
      * Constructor
      */
     public function __construct($user, $part, $quantity)
@@ -48,6 +61,7 @@ class PartOrder
         $this->user = $user;
         $this->part = $part;
         $this->quantity = $quantity;
+        $this->status = PartOrder::NEW_ORDER;
     }
 
     /**
@@ -130,5 +144,29 @@ class PartOrder
     public function getPart()
     {
         return $this->part;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     *
+     * @return PartOrder
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

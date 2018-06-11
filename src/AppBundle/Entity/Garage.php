@@ -41,13 +41,13 @@ class Garage
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="garage")
      */
-    private $mechanics;
+    private $users;
 
     public function __construct($name, $address)
     {
         $this->address = $address;
         $this->name = $name;
-        $this->mechanics = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -109,52 +109,38 @@ class Garage
     }
 
     /**
-     * Set mechanics
+     * Add user.
      *
-     * @param string $mechanics
+     * @param \AppBundle\Entity\User $user
      *
      * @return Garage
      */
-    public function setMechanics($mechanics)
+    public function addUser(\AppBundle\Entity\User $user)
     {
-        $this->mechanics = $mechanics;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
-     * Get mechanics
+     * Remove user.
      *
-     * @return string
-     */
-    public function getMechanics()
-    {
-        return $this->mechanics;
-    }
-
-    /**
-     * Add mechanic.
-     *
-     * @param \AppBundle\Entity\User $mechanic
-     *
-     * @return Garage
-     */
-    public function addMechanic(\AppBundle\Entity\User $mechanic)
-    {
-        $this->mechanics[] = $mechanic;
-
-        return $this;
-    }
-
-    /**
-     * Remove mechanic.
-     *
-     * @param \AppBundle\Entity\User $mechanic
+     * @param \AppBundle\Entity\User $user
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeMechanic(\AppBundle\Entity\User $mechanic)
+    public function removeUser(\AppBundle\Entity\User $user)
     {
-        return $this->mechanics->removeElement($mechanic);
+        return $this->users->removeElement($user);
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

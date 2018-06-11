@@ -8,50 +8,101 @@
             <a href="{{ path('homepage') }}">Accueil</a>
         </li>
         <li class="breadcrumb-item active">Parts</li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="breadcrumb-item active">Admin</li>
+        {% else %}
+            <li class="breadcrumb-item active">Mechanic</li>
+        {% endif %}
     </ol>
 {% endblock %}
 
 {% block body %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <i class="fa fa-table"></i> Parts</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>Serial Number</th>
-                        <th>Name</th>
-                        <th>Weight</th>
-                        <th>Image</th>
-                        <th>Quantity In Stock</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Serial Number</th>
-                        <th>Name</th>
-                        <th>Weight</th>
-                        <th>Image</th>
-                        <th>Quantity In Stock</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    {% for part in parts %}
+   {% for message in app.flashes('success') %}
+       <div class="alert alert-success" role="alert">
+           {{ message }}
+       </div>
+   {% endfor %}
+
+   {% if orders | length < 1 %}
+       <div class="row">
+           <div class="col-md-3 col-sm-3"></div>
+           <div class="col-md-6 col-sm-6 text-center" style="margin-top: 50px;">
+               <h1>Vous n'avez aucune commande en cours.</h1>
+               <a href="#" class="btn btn-primary">Passer ma première commande</a>
+           </div>
+       </div>
+    {% else %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Parts</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                         <tr>
-                            <td>{{ part.serialNumber }}</td>
-                            <td>{{ part.name }}</td>
-                            <td>{{ part.weight }}</td>
-                            <td><img src="{{ asset('images/parts/'~ part.picture ) }}" height="90" alt=""/></td>
-                            <td>{{ part.quantityInStock }}</td>
+                            <th>Serial Number</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Action available</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Serial Number</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Action available</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.part.serialNumber }}</td>
+                                <td>{{ order.part.name }}</td>
+                                <td>{{ order.quantity }}</td>
+                                {% set status = order.status %}
+                                <td>
+                                    {% if status == 0 %}
+                                        Order Created
+                                    {% elseif status == 10 %}
+                                        Order Accepted
+                                    {% elseif status == 20 %}
+                                        Order In Transit
+                                    {% elseif status == 30 %}
+                                        Order Delivered
+                                    {% elseif status == 40 %}
+                                        Order Deleted
+                                    {% else %}
+                                        Error ! Contact Us
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        {% set newStatus = order.status + 10 %}
+                                        {% if order.status < 30 %}
+                                            <a href="{{ path('order_update_status', {'orderId': order.id, 'status': newStatus }) }}" class="btn btn-primary">Update status</a>
+                                        {% endif %}
+                                        {% if order.status < 20 %}
+                                            <a href="{{ path('order_cancel', {'orderId': order.id, 'status': 40 }) }}" class="btn btn-danger">Cancel Order</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if order.status < 20 %}
+                                            <a href="{{ path('order_cancel', {'orderId': order.id, 'status': 40 }) }}" class="btn btn-primary">Cancel Order</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-    </div>
+    {% endif %}
+
 
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>

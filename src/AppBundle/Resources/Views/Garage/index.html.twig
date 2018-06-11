@@ -82,7 +82,7 @@
                 </tr>
                 </tfoot>
                 <tbody>
-                {% for mechanic in garage.mechanics %}
+                {% for mechanic in garage.users %}
                     <tr>
                         <td>{{ mechanic.name }}</td>
                         <td>{% for certif in mechanic.certifications %}{{ certif.name }}{% endfor %}</td>
