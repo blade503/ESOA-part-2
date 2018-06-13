@@ -44,6 +44,9 @@
                             <th>Name</th>
                             <th>Quantity</th>
                             <th>Status</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th>User</th>
+                            {% endif %}
                             <th>Action available</th>
                         </tr>
                         </thead>
@@ -53,6 +56,9 @@
                             <th>Name</th>
                             <th>Quantity</th>
                             <th>Status</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th>User</th>
+                            {% endif %}
                             <th>Action available</th>
                         </tr>
                         </tfoot>
@@ -78,6 +84,9 @@
                                         Error ! Contact Us
                                     {% endif %}
                                 </td>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                   <td>{{ order.user.name }} ({{ order.user.garage.name }})</td>
+                                {% endif %}
                                 <td>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         {% set newStatus = order.status + 10 %}
