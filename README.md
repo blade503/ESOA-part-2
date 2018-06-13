@@ -1,6 +1,8 @@
 ESOA - Usefull command
 ======================
 
+Projet sous symfony réalisé dans le cadre d'un projet pour la matière enterprise oriented software architecture. C'est un projet pour l'entreprise BE. Engine afin de répondre à leurs divers soucis internes constaté suite à un audit de leur SI.
+
 Mis à jour du schéme de bdd
 
     php bin/console doctrine:schema:update --force
