@@ -9,6 +9,7 @@ use AppBundle\Entity\PartOrder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DefaultController extends Controller
 {
@@ -17,6 +18,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
+
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
             ->getRepository(Garage::class)
@@ -32,6 +37,9 @@ class DefaultController extends Controller
      */
     public function partAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
 
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
@@ -57,6 +65,9 @@ class DefaultController extends Controller
      */
     public function certificationAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            throw New AccessDeniedException();
+        }
 
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
@@ -80,6 +91,10 @@ class DefaultController extends Controller
      */
     public function garageAction(Request $request, $id)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
+
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
             ->getRepository(Garage::class)

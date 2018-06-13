@@ -9,6 +9,7 @@ use AppBundle\Entity\PartOrder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class OrderController extends Controller
 {
@@ -17,6 +18,10 @@ class OrderController extends Controller
      */
     public function partAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
+
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
             ->getRepository(Garage::class)
@@ -39,6 +44,10 @@ class OrderController extends Controller
      */
     public function partAdminAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            throw New AccessDeniedException();
+        }
+
         //Récupération des garages pour le menu
         $garages = $this->getDoctrine()
             ->getRepository(Garage::class)
@@ -64,6 +73,10 @@ class OrderController extends Controller
      */
     public function updateStatusAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            throw New AccessDeniedException();
+        }
+
         $manager = $this->container->get('doctrine')->getManager();
 
         $order = $this->getDoctrine()
@@ -90,6 +103,10 @@ class OrderController extends Controller
      */
     public function cancelAction(Request $request)
     {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
+
         $manager = $this->container->get('doctrine')->getManager();
 
         $order = $this->getDoctrine()

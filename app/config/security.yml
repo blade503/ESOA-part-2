@@ -18,9 +18,10 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE USER]
 
     access_control:
-        - { path: ^/admin$ , roles: ROLE_ADMIN }
-        - { path: ^/admin/$ , roles: ROLE_ADMIN }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/ , roles: ROLE_USER }
+        - { path: ^/orders_admin , roles: ROLE_ADMIN }
+        - { path: ^/orders/updateStatus , roles: ROLE_ADMIN }
 
     firewalls:
         main:
