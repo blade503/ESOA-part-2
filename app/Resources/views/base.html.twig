@@ -15,6 +15,12 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.min.css') }}" rel="stylesheet">
 
+    <style>
+        .dropdown-menu {
+            left:-250px;
+        }
+    </style>
+
     {% block stylesheets %}{% endblock %}
 
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -90,8 +96,10 @@
     <script src="{{ asset('externalLibrairies/datatables/dataTables.bootstrap4.js') }}"></script>
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin.min.js') }}"></script>
-    <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
+
+    {% block script %}{% endblock %}
+
 </div>
 </body>
 

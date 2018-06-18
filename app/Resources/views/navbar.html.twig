@@ -33,6 +33,12 @@
                         <span class="nav-link-text">Certifications</span>
                     </a>
                 </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                    <a class="nav-link" href="{{ path('kpi') }}">
+                        <i class="fa fa-fw fa-tachometer"></i>
+                        <span class="nav-link-text">KPI</span>
+                    </a>
+                </li>
             {% endif %}
             {% if app.user and is_granted('ROLE_ADMIN') %}
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -115,26 +121,26 @@
                 <strong>
                   <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
               </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                        <span class="small float-right text-muted">10:17 AM</span>
+                        <div class="dropdown-message small">The order has updated her status</div>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">
               <span class="text-danger">
                 <strong>
-                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
+                  <i class="fa fa-long-arrow-down fa-fw"></i>Cancelled Order</strong>
               </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                        <span class="small float-right text-muted">11:25 AM</span>
+                        <div class="dropdown-message small">The order has been cancelled</div>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">
               <span class="text-success">
                 <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+                  <i class="fa fa-long-arrow-up fa-fw"></i>New Order</strong>
               </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                        <span class="small float-right text-muted">13:49 AM</span>
+                        <div class="dropdown-message small">An order has been created</div>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item small" href="#">View all alerts</a>

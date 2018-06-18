@@ -126,4 +126,35 @@ class DefaultController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/kpi", name="kpi")
+     */
+    public function KpiAction(Request $request)
+    {
+        if (false == $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            throw New AccessDeniedException();
+        }
+
+        $orders = $this->getDoctrine()
+            ->getRepository(PartOrder::class)
+            ->findAll();
+
+        //Récupération des garages pour le menu
+        $garages = $this->getDoctrine()
+            ->getRepository(Garage::class)
+            ->findAll();
+
+        //Récupération des garages pour le menu
+        $certifications = $this->getDoctrine()
+            ->getRepository(Certification::class)
+            ->findAll();
+
+        return $this->render('@App/Kpi/index.html.twig',
+            array(
+                'orderCounts' => count($orders),
+                'certificationCounts' => count($certifications),
+                'garagesNav' => $garages,
+            ));
+    }
 }
