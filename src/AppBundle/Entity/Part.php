@@ -72,6 +72,13 @@ class Part
     private $orders;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="certification", type="string", length=50)
+     */
+    private $certification;
+
+    /**
      * Get id
      *
      * @return integer
@@ -259,5 +266,29 @@ class Part
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set certification.
+     *
+     * @param string $certification
+     *
+     * @return Part
+     */
+    public function setCertification($certification)
+    {
+        $this->certification = $certification;
+
+        return $this;
+    }
+
+    /**
+     * Get certification.
+     *
+     * @return string
+     */
+    public function getCertification()
+    {
+        return $this->certification;
     }
 }

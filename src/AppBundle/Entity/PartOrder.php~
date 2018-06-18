@@ -14,9 +14,9 @@ class PartOrder
 {
     const NEW_ORDER = 0;
     const ACCEPTED_ORDER = 10;
-    const DELETED_ORDER = 20;
-    const IN_TRANSIT_ORDER = 30;
-    const DELIVERED_ORDER = 40;
+    const IN_TRANSIT_ORDER = 20;
+    const DELIVERED_ORDER = 30;
+    const DELETED_ORDER = 40;
 
     /**
      * @var int
@@ -144,5 +144,29 @@ class PartOrder
     public function getPart()
     {
         return $this->part;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     *
+     * @return PartOrder
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

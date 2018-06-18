@@ -46,6 +46,7 @@
                             <th>Status</th>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <th>User</th>
+                                <th>Certification required</th>
                             {% endif %}
                             <th>Action available</th>
                         </tr>
@@ -58,6 +59,7 @@
                             <th>Status</th>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <th>User</th>
+                                <th>Certification required</th>
                             {% endif %}
                             <th>Action available</th>
                         </tr>
@@ -86,6 +88,7 @@
                                 </td>
                                 {% if is_granted('ROLE_ADMIN') %}
                                    <td>{{ order.user.name }} ({{ order.user.garage.name }})</td>
+                                   <td>{{ order.part.certification }}</td>
                                 {% endif %}
                                 <td>
                                     {% if is_granted('ROLE_ADMIN') %}
