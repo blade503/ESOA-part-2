@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Certification;
 use AppBundle\Entity\Garage;
 use AppBundle\Entity\Part;
 use AppBundle\Entity\PartOrder;
