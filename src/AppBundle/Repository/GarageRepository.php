@@ -19,4 +19,13 @@ class GarageRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findByAddress($address)
+    {
+        return $this->createQueryBuilder('garage')
+            ->andWhere('garage.address = :address')
+            ->setParameter('address', $address)
+            ->getQuery()
+            ->execute();
+    }
 }
